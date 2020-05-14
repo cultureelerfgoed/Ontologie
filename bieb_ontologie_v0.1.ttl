@@ -1,0 +1,427 @@
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#>  .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ceo: <https://linkeddata.cultureelerfgoed.nl/def/ceo#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix edm: <http://www.europeana.eu/schemas/edm/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix bieb: <https://linkeddata.cultureelerfgoed.nl/def/bieb#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix schema: <https://schema.org/> .
+@prefix locn: <http://www.w3.org/ns/locn#> .
+@prefix gsp: <http://www.opengis.net/ont/geosparql#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix beeld: <https://linkeddata.cultureelerfgoed.nl/def/bieb#> .
+
+<https://linkeddata.cultureelerfgoed.nl/def/bieb>
+  a owl:Ontology ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  dcterms:creator <http://standaarden.overheid.nl/owms/terms/Rijksdienst_voor_het_Cultureel_Erfgoed> ;
+  dcterms:description "De Bieb ontologie is de volledige semantische representatie van het datamodel Bieb uit de datalaag van de RCE."@nl ;
+  dcterms:hasVersion "0.1"^^xsd:integer ;
+  dcterms:issued "2020-05-14"^^xsd:date ;
+  dcterms:language <http://id.loc.gov/vocabulary/iso639-1/nl> ;
+  dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+  dcterms:publisher <http://standaarden.overheid.nl/owms/terms/Rijksdienst_voor_het_Cultureel_Erfgoed> ;
+  dcterms:title "Bieb Ontologie"@nl ;
+  rdfs:comment "De Bieb ontologie is de volledige semantische representatie van het datamodel Bieb uit de datalaag van de RCE."@nl ;
+  rdfs:label "Bieb Ontologie"@nl ;
+  owl:imports dc: ;
+  owl:imports <http://www.w3.org/2004/02/skos/core> ;
+  foaf:mbox "thesauri@cultureelerfgoed.nl" ;
+.
+#Check of alle equivalentProperties, sub... ook inverse hebben
+# Classes
+bieb:BibliografischeGegevens
+  a owl:Class ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Bibliografische gegevens"@nl ;
+  rdfs:comment "De class BibliografischeGegevens geeft aan of het een bibliografische gegevens is."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  skos:note "owl:equivalentClass aangemaakt met class schema:Book zodat bijvoorbeeld schema:bookEdition ook te gebruiken binnen de bieb classes."@nl ;
+  owl:equivalentClass schema:Book
+.
+bieb:Boek
+  a owl:Class ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Boek"@nl ;
+  rdfs:comment "De class Boek geeft aan of het een boek is."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  rdfs:subClassOf bieb:BibliografischeGegevens
+.
+bieb:Rapport
+  a owl:Class ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Rapport"@nl ;
+  rdfs:comment "De class Rapport geeft aan of het een rapport is."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  rdfs:subClassOf bieb:BibliografischeGegevens
+.
+bieb:Tijdschrift
+  a owl:Class ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Tijdschrift"@nl ;
+  rdfs:comment "De class Tijdschrift geeft aan of het een tijdschrift is."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  rdfs:subClassOf bieb:BibliografischeGegevens
+.
+bieb:Artikel
+  a owl:Class ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Artikel"@nl ;
+  rdfs:comment "De class Artikel geeft aan of het een artikel is."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  rdfs:subClassOf bieb:BibliografischeGegevens
+.
+schema:Book
+  rdf:type owl:Class ;
+  rdfs:comment "A book." ;
+  rdfs:label "Book" ;
+  rdfs:subClassOf schema:CreativeWork
+.
+bibo:Document
+  a owl:Class ;
+  rdfs:label "Document"@en ;
+  owl:equivalentClass foaf:Document ;
+  rdfs:isDefinedBy "http://purl.org/ontology/bibo/"^^xsd:anyURI ;
+  rdfs:comment "A document (noun) is a bounded physical representation of body of information designed with the capacity (and usually intent) to communicate. A document may manifest symbolic, diagrammatic or sensory-representational information."@en ;
+  owl:equivalentClass bieb:boek
+.
+# Properties
+schema:bookEdition
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "The edition of the book." ;
+  rdfs:domain schema:Book ;
+  rdfs:label "book edition" ;
+  rdfs:range xsd:string ;
+.
+schema:illustrator
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "The illustrator of the book." ;
+  rdfs:domain schema:Book ;
+  rdfs:label "illustrator" ;
+  rdfs:range schema:Person ;
+.
+schema:isbn
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "The ISBN of the book." ;
+  rdfs:domain schema:Book ;
+  rdfs:label "isbn" ;
+  rdfs:range xsd:string ;
+  owl:equivalentProperty <http://purl.org/ontology/bibo/isbn> ;
+.
+bibo:numPages
+  a owl:DatatypeProperty ;
+  rdfs:label "number of pages"@en ;
+  rdfs:isDefinedBy "http://purl.org/ontology/bibo/"^^xsd:anyURI ;
+  rdfs:comment "The number of pages contained in a document"@en ;
+  rdfs:domain bibo:Document ;
+  rdfs:range rdfs:Literal ;
+  skos:example "143 p."@nl  ;
+.
+# Ook gekeken naar schema:abstract maar onvoldoende informatie hierover
+dcterms:abstract
+  rdf:type rdf:Property ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#abstract-003> ;
+  dcterms:issued "2000-07-11" ;
+  dcterms:modified "2008-01-14" ;
+  rdfs:comment "A summary of the resource."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Abstract"@en-US ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/description> ;
+  rdfs:subPropertyOf dcterms:description ;
+  owl:equivalentProperty schema:abstract ;
+  skos:note "Voor beschrijving hebben we zowel dcterms:abstract als schema;abstract opgenomen met de relatie owl:equivalentProperty zodat beiden gebruikt kunnen worden"@nl
+.
+dcterms:coverage
+  rdf:type rdf:Property ;
+  dcterms:description "Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates. Temporal topic may be a named period, date, or date range. A jurisdiction may be a named administrative entity or a geographic place to which the resource applies. Recommended best practice is to use a controlled vocabulary such as the Thesaurus of Geographic Names [TGN]. Where appropriate, named places or time periods can be used in preference to numeric identifiers such as sets of coordinates or date ranges."@en-US ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#coverageT-001> ;
+  dcterms:issued "2008-01-14" ;
+  dcterms:modified "2008-01-14" ;
+  rdfs:comment "The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Coverage"@en-US ;
+  rdfs:range dcterms:LocationPeriodOrJurisdiction ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/coverage> ;
+  rdfs:comment "Bij de RCE wordt deze property gebruikt het geotrefwoord te representeren."@nl
+.
+dcterms:created
+  rdf:type rdf:Property ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#created-003> ;
+  dcterms:issued "2000-07-11" ;
+  dcterms:modified "2008-01-14" ;
+  rdfs:comment "Date of creation of the resource."@en-US ;
+  rdfs:comment "Deze property wordt gebruikt voor creatiedatum van het object."@nl ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Date Created"@en-US ;
+  rdfs:range rdfs:Literal ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/date> ;
+  rdfs:subPropertyOf dcterms:date
+.
+# Dit nog verder eventueel uitbreiden met schema:datePublished
+edm:year
+  a rdf:Property ;
+	rdfs:label "Europeana Year"@en ;
+	skos:definition """A point of time associated with an event in the life of the original analog or
+  born digital object."""@en ;
+  rdfs:comment "Bij de RCE wordt deze property gebruikt om het jaar van de creatie van het object en/of het afgebeelde of bibliografische gegevens aan te geven."@nl ;
+	rdfs:subPropertyOf dcterms:temporal ;
+  rdfs:comment "Deze property wordt gebruikt voor creatie jaar van het afgebeelde object of bibliografische gegevens."@nl
+.
+dcterms:creator
+  rdf:type rdf:Property ;
+  dcterms:description "Examples of a Creator include a person, an organization, or a service."@en-US ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#creatorT-002> ;
+  dcterms:issued "2008-01-14" ;
+  dcterms:modified "2010-10-11" ;
+  rdfs:comment "An entity primarily responsible for making the resource."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Creator"@en-US ;
+  rdfs:range dcterms:Agent ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/creator> ;
+  rdfs:subPropertyOf dcterms:contributor ;
+  owl:equivalentProperty <http://xmlns.com/foaf/0.1/maker> ;
+  rdfs:comment "Deze property wordt gebruikt wanneer de auteur een uri is, wanneer een string wordt de property bieb:auteur gebruikt."@nl
+.
+schema:abstract a rdf:Property ;
+    rdfs:label "abstract" ;
+    dct:source <https://github.com/schemaorg/schemaorg/issues/276> ;
+    schema:category "issue-276" ;
+    schema:domainIncludes schema:CreativeWork ;
+    schema:isPartOf <http://pending.schema.org> ;
+    schema:rangeIncludes schema:Text ;
+    rdfs:comment "An abstract is a short description that summarizes a <a class=\"localLink\" href=\"http://schema.org/CreativeWork\">CreativeWork</a>."@nl ;
+    owl:equivalentProperty dcterms:abstract ;
+    skos:note "Voor beschrijving hebben we zowel dcterms:abstract als schema;abstract opgenomen met de relatie owl:equivalentProperty zodat beiden gebruikt kunnen worden"@nl
+.
+bieb:auteur
+  a owl:DatatypeProperty ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Auteur"@nl ;
+  rdfs:label "Author"@en ;
+  rdfs:comment "De property auteur wordt bij de RCE gebruikt om de auteur van het bibliografische werk te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  skos:note "Deze property wordt gebruikt wanneer de auteur een string is, wanneer een uri wordt de property dcterms:creator gebruikt."@nl
+.
+bieb:annotatie
+  a owl:DatatypeProperty ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Annotatie"@nl ;
+  rdfs:label "Annotation"@en ;
+  rdfs:comment "De property annotatie wordt bij de RCE gebruikt om bibliografische notaties te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  skos:example "Met bijlage"@nl
+.
+# In data zowel worldcat en adlib op te nemen
+dcterms:isReferencedBy
+  rdf:type rdf:Property ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#isReferencedBy-003> ;
+  dcterms:issued "2000-07-11" ;
+  dcterms:modified "2008-01-14" ;
+  rdfs:comment "A related resource that references, cites, or otherwise points to the described resource."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Is Referenced By"@en-US ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/relation> ;
+  rdfs:subPropertyOf dcterms:relation ;
+  skos:note "This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration."@en-US ;
+.
+dcterms:modified
+  rdf:type rdf:Property ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#modified-003> ;
+  dcterms:issued "2000-07-11" ;
+  dcterms:modified "2008-01-14" ;
+  rdfs:comment "Date on which the resource was changed."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Date Modified"@en-US ;
+  rdfs:range rdfs:Literal ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/date> ;
+  rdfs:subPropertyOf dcterms:date ;
+.
+bieb:uitgever
+  a rdf:Property ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Uitgever"@nl ;
+  rdfs:label "Publisher"@en ;
+  rdfs:comment "De property uitgever wordt bij de RCE gebruikt om de uitgever van een bibliografisch werk te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty dcterms:Publisher
+.
+dcterms:subject
+  rdf:type rdf:Property ;
+  dcterms:description "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary. To describe the spatial or temporal topic of the resource, use the Coverage element."@en-US ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#subjectT-001> ;
+  dcterms:issued "2008-01-14" ;
+  dcterms:modified "2008-01-14" ;
+  rdfs:comment "The topic of the resource."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Subject"@en-US ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/subject> ;
+  skos:note "This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration."@en-US ;
+  skos:note "Hier gebruiken we de uri uit een externe thesaurus."@nl ;
+  skos:example "https://data.cultureelerfgoed.nl/term/id/cht/00f67241-70d4-4703-9f25-d2163c0ad43d"@nl
+.
+dcterms:tableOfContents
+  rdf:type rdf:Property ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#tableOfContents-003> ;
+  dcterms:issued "2000-07-11" ;
+  dcterms:modified "2008-01-14" ;
+  rdfs:comment "A list of subunits of the resource."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Table Of Contents"@en-US ;
+  rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/description> ;
+  rdfs:subPropertyOf dcterms:description ;
+  skos:note "Dit kan zowel een uri als string zijn as-is."@nl
+.
+dcterms:title
+  rdf:type rdf:Property ;
+  dcterms:hasVersion <http://dublincore.org/usage/terms/history/#titleT-002> ;
+  dcterms:issued "2008-01-14" ;
+  dcterms:modified "2010-10-11" ;
+  rdfs:comment "A name given to the resource."@en-US ;
+  rdfs:isDefinedBy dcterms: ;
+  rdfs:label "Title"@en-US ;
+  rdfs:range rdfs:Literal ;
+  rdfs:comment "Deze property wordt gebruikt voor de titel van het bibliografisch werk."@nl ;
+.
+geosparql:asWKT
+  rdf:type owl:DatatypeProperty ;
+  dc:contributor "Matthew Perry" ;
+  dc:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
+  dc:date "2011-06-16" ;
+  dc:description "The WKT serialization of a geometry" ;
+  rdfs:comment "The WKT serialization of a geometry" ;
+  rdfs:domain gsp:Geometry ;
+  rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
+  rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
+  rdfs:label "asWKT"@en ;
+  rdfs:range gsp:wktLiteral
+.
+bieb:afmetingen
+  a owl:DatatypeProperty ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Afmetingen"@nl ;
+  rdfs:label "Dimensions"@en ;
+  rdfs:comment "De property afmetingen wordt bij de RCE gebruikt om de afmetingen van het bibliografische werk te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  skos:example "30 cm."@nl
+.
+bieb:cooperatieveAuteur
+a owl:DatatypeProperty ;
+dcterms:created "2020-05-14"^^xsd:date ;
+rdfs:label "Cooperatieve auteur"@nl ;
+rdfs:label "Cooperative Author"@en ;
+rdfs:comment "De property cooperatieveAuteur wordt bij de RCE gebruikt om de cooperatieve auteur van het bibliografische werk te benoemen."@nl ;
+rdfs:range xsd:string ;
+rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#>
+.
+bieb:illustraties
+  a owl:DatatypeProperty ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Illustraties"@nl ;
+  rdfs:label "Illustrations"@en ;
+  rdfs:comment "De property illustraties wordt bij de RCE gebruikt om de illustraties van het bibliografische werk te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#>
+.
+bieb:plaatsVanPublicatie
+  a owl:DatatypeProperty ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Plaats van publicatie"@nl ;
+  rdfs:label "Place of Publication"@en ;
+  rdfs:comment "De property plaatsVanPublicatie wordt bij de RCE gebruikt om de plaats van publicatie van het bibliografische werk te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#>
+.
+bieb:reeks
+  a owl:DatatypeProperty ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "reeks"@nl ;
+  rdfs:label "serie"@en ;
+  rdfs:comment "De property reeks wordt bij de RCE gebruikt om de reeks van het bibliografische werk te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#>
+.
+bieb:schapMarkering
+  a owl:DatatypeProperty ;
+  dcterms:created "2020-05-14"^^xsd:date ;
+  rdfs:label "Schap markering"@nl ;
+  rdfs:label "shelf Marking"@en ;
+  rdfs:comment "De property schapMarkering wordt bij de RCE gebruikt om de schap markering van het bibliografische werk te benoemen."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#>
+.
+ceo:rijksmonumentnummer
+  rdf:type owl:DatatypeProperty ;
+  dcterms:created "2018-01-30"^^xsd:date ;
+  dcterms:modified "2018-06-28"^^xsd:date ;
+  rdfs:comment "De property rijksmonumentnummer wordt gebruikt om aan te geven het unieke nummer waaronder het rijksmonument bekend is in het monumentenregister."@nl ;
+  rdfs:domain ceo:Rijksmonument ;
+  rdfs:label "Rijksmonumentnummer"@nl ;
+  rdfs:range xsd:integer ;
+.
+bieb:woonplaatsnaam
+a owl:DatatypeProperty ;
+  dcterms:created "2020-05-12"^^xsd:date ;
+  rdfs:label "Woonplaatsnaam"@nl ;
+  rdfs:comment "De property woonplaatsnaam wordt gebruikt om aan te geven de woonplaats waarin het afgebeelde object staat."@nl ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty ceo:woonplaatsnaam, beeld:woonplaatsnaam
+.
+bieb:volledigAdres
+  a rdf:Property ;
+  dcterms:created "2020-05-12"^^xsd:date ;
+  rdfs:label "Volledig adres"@nl ;
+  rdfs:comment "De property volledigAdres wordt gebruikt om aan te geven het volledige adres van het afgebeelde object."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty ceo:volledigAdres, locn:fullAddress, beeld:volledigAdres
+.
+bieb:straat
+  a rdf:Property ;
+  dcterms:created "2020-05-12"^^xsd:date ;
+  rdfs:label "Straat"@nl ;
+  rdfs:comment "De property straat wordt gebruikt om aan te geven de straat waarin het afgebeelde object staat."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty ceo:straat, locn:thoroughfare, beeld:straat
+.
+bieb:huisnummer
+  a rdf:Property ;
+  dcterms:created "2020-05-12"^^xsd:date ;
+  rdfs:label "Huisnummer"@nl ;
+  rdfs:comment "De property huisnummer wordt gebruikt om aan te geven het huisnummer van het afgebeelde object."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty ceo:huisnummer, locn:locatorDesignator, beeld:huisnummer
+.
+bieb:postcode
+  a rdf:Property ;
+  dcterms:created "2020-05-12"^^xsd:date ;
+  rdfs:label "Postcode"@nl ;
+  rdfs:comment "De property postcode wordt gebruikt om aan te geven de postcode behorende bij het adres van het afgebeelde object."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty ceo:postcode, locn:postCode, beeld:postcode
+.
+bieb:gemeente
+  a rdf:Property ;
+  dcterms:created "2020-05-12"^^xsd:date ;
+  rdfs:label "Gemeente"@nl ;
+  rdfs:comment "De property gemeente wordt gebruikt om aan te geven in welke gemeente het afgebeelde object staat."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty ceo:heeftGemeente, locn:adminUnitL2, beeld:gemeente
+.
+bieb:provincie
+  a rdf:Property ;
+  dcterms:created "2020-05-12"^^xsd:date ;
+  rdfs:label "Provincie"@nl ;
+  rdfs:comment "De property provincie wordt gebruikt om aan te geven in welke provincie het afgebeelde object staat."@nl ;
+  rdfs:isDefinedBy <https://linkeddata.cultureelerfgoed.nl/def/bieb#> ;
+  owl:equivalentProperty ceo:heeftProvincie, beeld:provincie
+.
